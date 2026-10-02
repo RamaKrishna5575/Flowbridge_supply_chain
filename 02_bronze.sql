@@ -72,7 +72,7 @@ comment = 'bronze layer - raw orders supply chain for flowbridge';
 
 
 /*-------------SNOWPIPE----------------*/
-CREATE PIPE IF NOT EXISTS bronze_sch.supply_chain_pipe
+CREATE or replace PIPE bronze_sch.supply_chain_pipe
 auto_ingest = true
 integration = flowbridge_notification_inti
 comment = 'snowpipe for flowbridge supply chain raw data injestion. '
@@ -99,14 +99,11 @@ select system$pipe_status('bronze_sch.supply_chain_pipe');
 alter pipe bronze_sch.supply_chain_pipe refresh;
 
 /*check raw data*/
-
 select * from bronze_sch.raw_orders;
-
 /*check ingestion history*/
 
 SELECT * FROM TABLE(
 information_schema.copy_history(
 table_name => 'raw_orders',
-start_time => dateadd(hour,-1,current_timestamp())
-);
-)
+start_time => dateadd(hour,-12,current_timestamp())
+));
