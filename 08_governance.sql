@@ -97,3 +97,4 @@ scheduled_time_range_start => dateadd(hour,-1,current_timestamp())
 ));
 
 show resource monitors;
+
