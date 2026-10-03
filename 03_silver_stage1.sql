@@ -355,6 +355,7 @@ SRC.FILE_NAME,SRC.FILE_ROW_NUMBER,SRC.INGESTED_AT
 
 create or replace task silver_sch.bronze_to_silver_task
 warehouse = flowbridge_pipeline_wh
+schedule = '1 minute'
 comment = 'this task is intended to run sp_bronze_to_silve for every 1 minut and when stream has data.'
 when SYSTEM$STREAM_HAS_DATA('silver_sch.raw_orders_stream')
 AS
@@ -363,5 +364,4 @@ CALL silver_sch. sp_bronze_to_silver();
 
 -- RESUME TASK
 ALTER TASK silver_sch.bronze_to_silver_task RESUME;
-
 
